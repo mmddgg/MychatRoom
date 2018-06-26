@@ -71,3 +71,23 @@ ReactDOM.render(
     ,
     document.getElementById(ROOTNODEID)
 );
+
+
+
+/*
+启动 MongoDB :
+mongod --dbpath /Users/Simon/Documents/MychatRoom/data
+mongo
+    http://127.0.0.1:27017/
+
+
+npm run built ,打包
+npm run start ,启动本地服务 webpackServer
+http://localhost:5060/#/  访问本地页面
+
+npm run server 启动Node 服务
+http://localhost:8090/
+
+npm run nodeDebug  启动node断点调试
+http://127.0.0.1:8080/?port=5858
+*/    
