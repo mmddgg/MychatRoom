@@ -48,7 +48,16 @@ module.exports = {
     // ],
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin()//热模块替换插件
-    ],
+        new webpack.HotModuleReplacementPlugin(),//模块热替换插件 
+    ]
 }
 
+
+
+// webpackConfig.babel.plugins.push([
+//     'react-intl', {
+//       messagesDir: './client/i18n-messages',
+//     },
+// ]);
+
+//  module.exports  = webpackConfig;

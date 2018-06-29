@@ -1,0 +1,13 @@
+
+.ant-layout-content .registerForm,
+.ant-layout-content .welcomeArea{
+    width: 60%;
+    margin: 25% 20% 0 20%;
+}
+.ant-layout-content .welcomeArea{text-align: center;color: #fff;}
+
+.ant-form,
+.ant-form label,
+ .ant-form-item-required:before{
+    font-size: 12px !important;
+}

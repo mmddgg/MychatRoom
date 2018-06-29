@@ -1,6 +1,7 @@
 {
     "presets":["env","es2015","stage-0","react"],
     "plugins": [
-      ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
+      ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }],
+      ["react-intl", { "messagesDir": "./client/i18n-messages" }]
     ]
 }

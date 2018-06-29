@@ -37,8 +37,18 @@ import path from "./route/path.js"; //当前产品模块路径管理
 import 'antd/dist/antd.css';
 import 'ant-design-pro/dist/ant-design-pro.css';
 
+//saga
 import rootSagas from "./sagas/watchSagas";
 
+//语言包 (react-intl 国际化)
+// https://www.cnblogs.com/yangstar90/p/7978232.html
+//https://segmentfault.com/a/1190000008217058
+import en from 'react-intl/locale-data/en';
+import zh from 'react-intl/locale-data/zh';
+// import enUS from '../client/language/en-US.json';
+// import zhCN from '../client/language/zh-CN.json';
+// addLocaleData(en);
+// addLocaleData(zh);
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware,logger];
@@ -57,7 +67,8 @@ const initialState = {};
 
 
 ReactDOM.render(
-    <IntlProvider locale={'zh'}>
+    <IntlProvider locale={'zh'} //messages={zhCN}
+    >
         <Provider store={store}>
             <HashRouter history={hashHistory}>
                 <Switch>
