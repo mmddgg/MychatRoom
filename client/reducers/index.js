@@ -1,9 +1,10 @@
 import {register,checkNickname} from "./userCenter";
-import { combineReducers, createStore } from 'redux'
+import {common} from "./common";
+import { combineReducers } from 'redux'
 
 
 export default combineReducers({
-    register,checkNickname
+    register,checkNickname,common
 })
 
 

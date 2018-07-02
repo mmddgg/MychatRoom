@@ -43,12 +43,10 @@ import rootSagas from "./sagas/watchSagas";
 //语言包 (react-intl 国际化)
 // https://www.cnblogs.com/yangstar90/p/7978232.html
 //https://segmentfault.com/a/1190000008217058
-import en from 'react-intl/locale-data/en';
-import zh from 'react-intl/locale-data/zh';
-// import enUS from '../client/language/en-US.json';
-// import zhCN from '../client/language/zh-CN.json';
-// addLocaleData(en);
-// addLocaleData(zh);
+
+import enUS from "./language/en-US"
+import zhCN from "./language/zh-CN"
+
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware,logger];
@@ -64,10 +62,23 @@ const ROOTNODEID = 'chatRoom';
 const initialState = {};
 
 
-
+const getCurrentAppLocale = () => {
+    const language = store.getState('language_key');
+    switch (language) {
+      case 'zh-CN':
+        return zhCN
+      default:
+        return enUS
+    }
+  }
+  
+  window.appLocale = getCurrentAppLocale()
 
 ReactDOM.render(
-    <IntlProvider locale={'zh'} //messages={zhCN}
+    <IntlProvider 
+    locale={window.appLocale.locale}
+    messages={window.appLocale.messages}
+    formats={window.appLocale.formats}
     >
         <Provider store={store}>
             <HashRouter history={hashHistory}>

@@ -1,5 +1,5 @@
 import React ,{ Component,PropTypes} from "react";
-import { Icon,Form ,Input,Radio,Button,Spin,Layout,Dropdown,Row,Col} from "antd";
+import { Icon,Form ,Input,Radio,Button,Spin,Layout,Dropdown,Row,Col,Menu} from "antd";
 import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
 import {IntlProvider, FormattedMessage ,defineMessages,addLocaleData,injectIntl} from 'react-intl';
 import { connect } from 'react-redux'
@@ -7,6 +7,7 @@ import ACTIONS from "../reducers/actions";
 import "./global.css";
 import "./EnetryIndex.css";
 import API from "../api/api";
+import Langulage from "./Langulage.jsx";
 
 const textMesgList = defineMessages({
     copyright:{
@@ -92,32 +93,25 @@ class EneryIndex extends Component{
             wrapperCol: { span: 14 },
         };
         const copyright = <div>Copyright <Icon type="copyright" /> 2017 {intl.formatMessage(textMesgList.copyright)}</div>;
-        const menu = (<Menu>
-                <Menu.Item>
-                    <a>1st menu item</a>
-                </Menu.Item>
-            </Menu>
-        );
+       
         return(
             <Layout>
                 {
                   !welecome &&
-                  <Header>{intl.formatMessage(textMesgList.productTip)}</Header>  
+                  <Header>
+                    <Row>
+                        <Col span={8}><p className="welcomeArea">{intl.formatMessage(textMesgList.productTip)}</p></Col>
+                        <Col span={15} />
+                        <Col span={1}><Langulage /></Col>
+                    </Row>
+                  </Header>  
                 }
                 {
                     welecome
                     ?
                     <Spin>
                     <Content>
-                        <Row>
-                            <Col sapan={8}><p className="welcomeArea">{intl.formatMessage(textMesgList.welcomeText)}</p></Col>
-                            <Col span={8} />
-                            <Col sapan={8}>
-                                <Dropdown overlay={menu} placement="bottomRight">
-                                    <Icon type="global" style={{color:'#fff'}} />
-                                </Dropdown>
-                            </Col>
-                        </Row>
+                        {intl.formatMessage(textMesgList.welcomeText)}
                     </Content>
                     </Spin>
                     :

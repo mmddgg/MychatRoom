@@ -1,6 +1,9 @@
 
 
 export default {
+    common:{
+        setLanguage:'common.setLanguage',
+    },
     userCenter:{
         register:{
             submit:'userCenter.register.submit',

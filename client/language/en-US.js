@@ -1,12 +1,12 @@
-import datePickerLocale from 'antd/lib/date-picker/locale/en_US';
+import antdEn from 'antd/lib/locale-provider/en_US'
 import appLocaleData from 'react-intl/locale-data/en';
-import messages from './en-US.messages.js';
+import enMessages from './en.json';
 
-window.appLocale = {
+export default {
   // 合并所有 messages，加入 antd 组件的 messages
-  messages: Object.assign({}, messages, {
-    datePickerLocale,
-  }),
+  messages: {...enMessages},
+
+  antd: antdEn,
 
   // locale
   locale: 'en-US',

@@ -2,6 +2,7 @@
     "presets":["env","es2015","stage-0","react"],
     "plugins": [
       ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }],
-      ["react-intl", { "messagesDir": "./client/i18n-messages" }]
+      ["react-intl", { "messagesDir": "./client/i18n-messages","enforceDescriptions": false }],
+      ["transform-decorators-legacy"]
     ]
 }

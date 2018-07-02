@@ -1,0 +1,12 @@
+{
+  "public.copyright": "copyright with Simon",
+  "public.nickname": "nickname",
+  "public.plsInput": "please input",
+  "public.plsSelect": "please select",
+  "public.productTip": "Welcome to chatRoom",
+  "public.resigter": "register",
+  "public.sexual": "sexual",
+  "public.styleSign": "styleSign",
+  "public.welcome.text": "Welcome to chatRoom.Know is loading data，waitting ...",
+  "register.tip.nicknameRepeat": "That nickname is existing, please change it."
+}
