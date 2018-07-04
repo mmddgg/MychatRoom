@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 //redux相关依赖
 import { combineReducers, createStore,applyMiddleware} from 'redux'
-import {Provider } from "react-redux" ;
+import {Provider,connect } from "react-redux" ;
 import logger from 'redux-logger';
 import createSagaMiddleware ,{ takeLatest, takeEvery } from 'redux-saga';
 import { call, put, fork, select } from 'redux-saga/effects';
@@ -21,7 +21,7 @@ import { handleActions } from 'redux-actions';
 import { createHistory, createHashHistory, useBasename } from 'history';
 //import { hashHistory, useRouterHistory ,Router, Route, Link  } from 'react-router'; //redux-router
 import { HashRouter, Route, hashHistory, Switch } from 'react-router-dom'
-
+import route from "./route/route";//路由文件
 
 //国际化相关
 import { LocaleProvider } from 'antd';
@@ -29,8 +29,9 @@ import {IntlProvider, FormattedMessage ,defineMessages,addLocaleData} from 'reac
 
 //外部文件引入相关
 import EnetryIndex from "./components/EnetryIndex.jsx"; //首页UI
+import HallCompoent from "./components/Hall.jsx";
 import rootReducer from "./reducers/index"; //模型集合
-import route from "./route/route";//路由文件
+
 import path from "./route/path.js"; //当前产品模块路径管理
 
 //and 和 antdPro 样式文件
@@ -48,6 +49,7 @@ import enUS from "./language/en-US"
 import zhCN from "./language/zh-CN"
 
 
+
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware,logger];
 const store = createStore(
@@ -63,32 +65,39 @@ const initialState = {};
 
 
 const getCurrentAppLocale = () => {
-    const language = store.getState('language_key');
-    switch (language) {
-      case 'zh-CN':
+    const {common:{language_key}} = store.getState();
+    switch (language_key) {
+        case 'zh-CN':
         return zhCN
-      default:
+        default:
         return enUS
     }
-  }
+}
+window.appLocale = getCurrentAppLocale();
   
-  window.appLocale = getCurrentAppLocale()
+
+  
 
 ReactDOM.render(
     <IntlProvider 
     locale={window.appLocale.locale}
     messages={window.appLocale.messages}
     formats={window.appLocale.formats}
-    >
+    >   
+        <LocaleProvider  locale={window.appLocale.antd}>
         <Provider store={store}>
             <HashRouter history={hashHistory}>
                 <Switch>
-                <Route path="/" component={EnetryIndex}>
-                        <Route path={path.hallPaht} component={EnetryIndex}/>
-                </Route>
+                    <Route path="/" component={EnetryIndex}>
+                        <Route path={path.hallPaht} component={HallCompoent} />
+                    </Route>
                 </Switch>
             </HashRouter>
+            {
+                //route(hashHistory)
+            }
         </Provider>
+        </LocaleProvider>
     </IntlProvider>
     ,
     document.getElementById(ROOTNODEID)

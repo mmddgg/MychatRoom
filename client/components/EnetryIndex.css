@@ -1,4 +1,7 @@
 
+.ant-layout-header .welcomeArea{
+    color: #fff;
+}
 .ant-layout-content .registerForm,
 .ant-layout-content .welcomeArea{
     width: 60%;

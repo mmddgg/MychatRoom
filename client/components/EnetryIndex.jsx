@@ -1,6 +1,5 @@
 import React ,{ Component,PropTypes} from "react";
 import { Icon,Form ,Input,Radio,Button,Spin,Layout,Dropdown,Row,Col,Menu} from "antd";
-import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
 import {IntlProvider, FormattedMessage ,defineMessages,addLocaleData,injectIntl} from 'react-intl';
 import { connect } from 'react-redux'
 import ACTIONS from "../reducers/actions";
@@ -8,12 +7,9 @@ import "./global.css";
 import "./EnetryIndex.css";
 import API from "../api/api";
 import Langulage from "./Langulage.jsx";
+import PublicFooter from "./PublicFooter.jsx";
 
 const textMesgList = defineMessages({
-    copyright:{
-        id:'public.copyright',
-        defaultMessage:'Simon出品'
-    },
     welcomeText:{
         id:'public.welcome.text',
         defaultMessage:'欢迎来到重叠空间聊天室。数据正在加载中，请稍候...'
@@ -39,21 +35,6 @@ const {userCenter} = ACTIONS;
 class EneryIndex extends Component{
     constructor(props){
         super(props);
-        this.linkList = [{
-            key: '帮助',
-            title: '帮助',
-            href: '',
-          }, {
-            key: 'github',
-            title: <Icon type="github" />,
-            href: 'https://github.com/ant-design/ant-design-pro',
-            blankTarget: true,
-          }, {
-            key: '条款',
-            title: '条款',
-            href: '',
-            blankTarget: true,
-          }];
         this.state = {
             welecome:false
         };
@@ -77,7 +58,6 @@ class EneryIndex extends Component{
     }
     exsitname(name){
         if(!name){return false;}
-        this.setState({afterInput:true});
         const { dispatch} = this.props;
         dispatch({
             type:userCenter.checkNickname.submit,
@@ -86,14 +66,12 @@ class EneryIndex extends Component{
     }
     render(){
         const { intl ,form ,isRepeat,loadingCheckNickname} = this.props;
-        const {welecome ,afterInput} = this.state; 
+        const {welecome } = this.state; 
         const { getFieldDecorator } = form;
         const formItemLayout = {
             labelCol: { span: 6 },
             wrapperCol: { span: 14 },
         };
-        const copyright = <div>Copyright <Icon type="copyright" /> 2017 {intl.formatMessage(textMesgList.copyright)}</div>;
-       
         return(
             <Layout>
                 {
@@ -111,7 +89,7 @@ class EneryIndex extends Component{
                     ?
                     <Spin>
                     <Content>
-                        {intl.formatMessage(textMesgList.welcomeText)}
+                        <p className="welcomeArea">{intl.formatMessage(textMesgList.welcomeText)}</p>
                     </Content>
                     </Spin>
                     :
@@ -120,8 +98,6 @@ class EneryIndex extends Component{
                         <FormItem 
                             {...formItemLayout} 
                             label={intl.formatMessage(textMesgList.nickName)}
-                            // validateStatus={afterInput ? (loadingCheckNickname ? 'validating' : (isRepeat?'warning':'')) :''}
-                            // help={afterInput && isRepeat ? intl.formatMessage(textMesgList.isRepeat):''}
                         >
                         {getFieldDecorator('nickName', {
                             rules: [
@@ -176,7 +152,7 @@ class EneryIndex extends Component{
                         </Form>
                     </Content>
                 }
-                <Footer><GlobalFooter links={this.linkList} copyright={copyright} /></Footer>
+                <PublicFooter />
             </Layout>
         );
     }

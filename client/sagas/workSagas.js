@@ -38,5 +38,5 @@ function * register(action){
 }
 
 export {
-    register  ,checkNickname
+    register,checkNickname
 };
