@@ -6,6 +6,7 @@ Mock.Random.boolean();
 Mock.Random.string();
 Mock.Random.date();
 Mock.Random.image();
+Mock.Random.color();
 
 export default{
     checkNickname:Mock.mock({
@@ -23,7 +24,9 @@ export default{
             description:/[\u4e00-\u9fa5_a-zA-Z0-9]{15,}/,
             creatorId:uuid.v4,
             createTime:'@date("yyyy-MM-dd HH:mm:ss")',
-            iconImg:Mock.Random.image('200x100', '#50B347', '#FFF', 'Mock.js'),
+            iconImg:function(){
+                return Mock.Random.image('200x100',Mock.mock('@color'), '#FFF', 'Mock.js');
+            },
             maxPerson:10,
             'currentPerson|1-10':2,
             'necessaryPwd|1-2':true,
@@ -38,7 +41,9 @@ export default{
         description:/[\u4e00-\u9fa5_a-zA-Z0-9]{15,}/,
         creatorId:uuid.v4,
         createTime:'@date("yyyy-MM-dd HH:mm:ss")',
-        iconImg:Mock.Random.image('200x100', '#50B347', '#FFF', 'Mock.js'),
+        iconImg:function(){
+            return Mock.Random.image('200x100',Mock.mock('@color'), '#FFF', 'Mock.js');
+        },
         maxPerson:10,
         'currentPerson|1-10':2,
         'necessaryPwd|1-2':true,
