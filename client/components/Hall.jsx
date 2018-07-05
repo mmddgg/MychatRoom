@@ -1,5 +1,5 @@
 import React ,{ Component,PropTypes} from "react";
-import { Icon,Form ,Card,Radio,Avatar,Spin,Layout,Dropdown,Row,Col,Menu,Pagination} from "antd";
+import { Icon,Form ,Card,Radio,Avatar,Spin,Layout,Dropdown,Row,Col,Menu,Pagination,Alert} from "antd";
 import {IntlProvider, FormattedMessage ,defineMessages,addLocaleData,injectIntl} from 'react-intl';
 import { connect } from 'react-redux'
 import ACTIONS from "../reducers/actions";
@@ -33,11 +33,14 @@ class HallCompoent extends Component{
             type:ACTIONS.chatRoom.list.query
         });
     }
-    menuChange(){
-
+    menuChange(a,b,c){
+        console.log(a,b,c);
     }
     render(){
-        const { intl } = this.props;
+        const { intl,queryListLoading,chatRoomListData={},chatRoomListErr } = this.props;
+        const {
+            code,mesg,currenPage,pageSize,total,result=[]
+        } = chatRoomListData;
         const menu = (
             <Menu 
                 onClick={this.menuChange.bind(this)}>
@@ -58,27 +61,39 @@ class HallCompoent extends Component{
                     <Col span={2}><Langulage /></Col>
                 </Row>
                 </Header>
+                <Spin spinning={queryListLoading}>
+                {
+                   chatRoomListErr || code !== 200 
+                   ?
+                   <Content>
+                       <Alert message="Error" description={chatRoomListErr || mesg} type="error" showIcon={true} />
+                   </Content>:
                
-                <Content>
-                   <div></div>
-                   <div>
-                   <Card
-                        style={{ width:'20%'}}
-                        cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                        actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-                    >
-                        <Card.Meta
-                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title="Card title"
-                        description="This is the description"
-                        />
-                    </Card>
-
-                   </div>
-                   <div>
-                    <Pagination  total={50} showSizeChanger={true} showQuickJumper={true} pageSizeOptions={['10', '15', '20', '25']} />
-                   </div>
-                </Content>                
+                    <Content>
+                    <div></div>
+                    <div>
+                        {
+                            result.map((item,index)=>{
+                                return (
+                                    <Card style={{ width:'18%',margin:'0 0.95% 15px 0.95%' ,display:'inline-block',verticalAlign:'Top',cursor:'pointer'}}
+                                    cover={<img alt={item.name}  src={item.iconImg} />}
+                                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                                    >
+                                        <Card.Meta avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                        title={item.name} 
+                                        description={item.description}
+                                        />
+                                    </Card>
+                                );
+                            })
+                        }
+                    </div>
+                    <div style={{textAlign:'right',paddingRight:'0.95%'}}>
+                        <Pagination  total={50} showSizeChanger={true} showQuickJumper={true} pageSizeOptions={['10', '15', '20', '25']} />
+                    </div>
+                    </Content>
+                }
+                </Spin>    
                 <PublicFooter />
             </Layout>
         );
@@ -86,8 +101,9 @@ class HallCompoent extends Component{
 }
 
 const mapStateToProps = (state,ownProps)=>{
-    const {checkNickname,register} = state;
-    return{...checkNickname,...register};
+    const {chatRoomlist} = state;
+    console.log(state);
+    return{...chatRoomlist};
 }
 
 const mapDispatchToProps = (dispatch,ownProps)=>{

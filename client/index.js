@@ -88,7 +88,7 @@ ReactDOM.render(
         <Provider store={store}>
             <HashRouter history={hashHistory}>
                 <Switch>
-                    <Route path="/" component={EnetryIndex}>
+                    <Route path="/" component={HallCompoent}>
                         <Route path={path.hallPaht} component={HallCompoent} />
                     </Route>
                 </Switch>
