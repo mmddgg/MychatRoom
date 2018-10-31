@@ -12,7 +12,6 @@ import { call, put, fork, select } from 'redux-saga/effects';
 import { reducer as modal } from 'redux-modal';
 import { handleActions } from 'redux-actions';
 
-//import RedBox from 'redbox-react';
 //dva相关
 //import dva from 'dva';
 //import createLoading from "dva-loading";
@@ -20,7 +19,7 @@ import { handleActions } from 'redux-actions';
 //url ,路由相关
 import { createHistory, createHashHistory, useBasename } from 'history';
 //import { hashHistory, useRouterHistory ,Router, Route, Link  } from 'react-router'; //redux-router
-import { HashRouter, Route, hashHistory, Switch } from 'react-router-dom'
+import { HashRouter, Route, hashHistory, Switch,BrowserRouter } from 'react-router-dom'
 import route from "./route/route";//路由文件
 
 //国际化相关
@@ -86,16 +85,12 @@ ReactDOM.render(
     >   
         <LocaleProvider  locale={window.appLocale.antd}>
         <Provider store={store}>
-            <HashRouter history={hashHistory}>
-                <Switch>
-                    <Route path="/" component={HallCompoent}>
-                        <Route path={path.hallPaht} component={HallCompoent} />
-                    </Route>
-                </Switch>
-            </HashRouter>
-            {
-                //route(hashHistory)
-            }
+            <BrowserRouter>
+                <div>
+                <Route path="/" component={EnetryIndex} />
+                <Route path={"/hall"} component={HallCompoent} />
+                </div>
+            </BrowserRouter>
         </Provider>
         </LocaleProvider>
     </IntlProvider>
@@ -106,13 +101,9 @@ ReactDOM.render(
 
 
 /*
-启动 MongoDB :
-mongod --dbpath /Users/Simon/Documents/MychatRoom/data
-mongo
-    http://127.0.0.1:27017/
-
 
 npm run built ,打包
+
 npm run start ,启动本地服务 webpackServer
 http://localhost:5060/#/  访问本地页面
 
@@ -121,4 +112,18 @@ http://localhost:8090/
 
 npm run nodeDebug  启动node断点调试
 http://127.0.0.1:8080/?port=5858
+
+启动 MongoDB :
+mongod --dbpath /Users/Simon/Documents/MychatRoom/data
+mongo
+    http://127.0.0.1:27017/
 */    
+
+
+// 1. rootSga  的合并问题 !!!
+// 2. router 的Ptah 匹配问题
+// 3. takeLeading 的应用场景
+
+// 重构
+// 1. roghinc框架的使用
+// 2. proxy代理的使用

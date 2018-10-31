@@ -6,16 +6,9 @@
     font-style: normal;
 }
 
-#chatRoom,.ant-layout{ height: 100%;}
+#chatRoom,
+#chatRoom >div,
+#chatRoom >div .ant-layout{ height: 100%;}
 
 
-.ant-layout-header{
-    background: #f0f2f5;
-}
-.ant-layout-content{
-
-
-}
-.ant-layout-footer{
-    
-}
+.ant-layout-sider-trigger{top:166px;}

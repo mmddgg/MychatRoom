@@ -14,15 +14,15 @@ const textMesgList = defineMessages({
 class PublicFooter extends Component{
     render(){
         const {intl} = this.props;
-        const copyright = <div>Copyright <Icon type="copyright" /> 2017 {intl.formatMessage(textMesgList.copyright)}</div>;
+        const copyright = <div>Copyright <Icon type="copyright" /> 2018 {intl.formatMessage(textMesgList.copyright)}</div>;
         const linkList = [{
-            key: '帮助',
-            title: '帮助',
+            key: 'About me',
+            title: '关于我',
             href: '',
           }, {
             key: 'github',
             title: <Icon type="github" />,
-            href: 'https://github.com/ant-design/ant-design-pro',
+            href: 'https://github.com/mmddgg',
             blankTarget: true,
           }, {
             key: '条款',

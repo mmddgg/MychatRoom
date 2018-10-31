@@ -36,13 +36,10 @@ class EneryIndex extends Component{
     constructor(props){
         super(props);
         this.state = {
-            welecome:false
+            welecome:true
         };
     }
     componentWillMount(){
-        // setTimeout(()=>{
-        //     this.setState({welecome:false});
-        // }, 2000)
     }
     handleSubmit(e){
         e.preventDefault();
@@ -64,9 +61,14 @@ class EneryIndex extends Component{
             payload:name
         });
     }
+    componentWillReceiveProps(nextProps,props){
+        if(nextProps.userId){
+            nextProps.history.push('/hall')
+        }
+    }
     render(){
         const { intl ,form ,isRepeat,loadingCheckNickname} = this.props;
-        const {welecome } = this.state; 
+        const {welecome ,collapsed} = this.state; 
         const { getFieldDecorator } = form;
         const formItemLayout = {
             labelCol: { span: 6 },
@@ -74,85 +76,82 @@ class EneryIndex extends Component{
         };
         return(
             <Layout>
-                {
-                  !welecome &&
-                  <Header>
-                    <Row>
-                        <Col span={8}><p className="welcomeArea">{intl.formatMessage(textMesgList.productTip)}</p></Col>
-                        <Col span={15} />
-                        <Col span={1}><Langulage /></Col>
-                    </Row>
-                  </Header>  
-                }
-                {
-                    welecome
-                    ?
-                    <Spin>
-                    <Content>
-                        <p className="welcomeArea">{intl.formatMessage(textMesgList.welcomeText)}</p>
-                    </Content>
-                    </Spin>
-                    :
-                    <Content>
-                        <Form onSubmit={this.handleSubmit.bind(this)} className="registerForm">
-                        <FormItem 
-                            {...formItemLayout} 
-                            label={intl.formatMessage(textMesgList.nickName)}
-                        >
-                        {getFieldDecorator('nickName', {
-                            rules: [
-                                {pattern:/^[A-Za-z0-9-_]{8,15}$/g,message:'昵称由8-15位的数字，字母,-,_组成'},
-                                {   required: true,
-                                    message: `${intl.formatMessage(textMesgList.plsInput)}${intl.formatMessage(textMesgList.nickName)}`
-                                },
-                                {validator:(rule,value,callback)=>{
-                                        if(value == undefined  || value == '' || !/^[A-Za-z0-9-_]{8,15}$/g.test(value)){
-                                            callback();
-                                            return false;
-                                        }
-                                        API.checkNickname({name:value}).then(res=>{
-                                            if(res.isRepeat){
-                                                callback(intl.formatMessage(textMesgList.isRepeat));
-                                            }else{
-                                                callback(); 
-                                            }
-                                        })
-                                    }
+                <Header>
+                <Row>
+                <Col span={8} style={{color:'#fff'}}>{intl.formatMessage(textMesgList.productTip)}</Col>
+                <Col span={14} />
+                <Col span={2}><Langulage /></Col>
+                </Row>
+                </Header>
+            <Layout>
+            <Content>
+                <Form onSubmit={this.handleSubmit.bind(this)} className="registerForm">
+                <FormItem 
+                    {...formItemLayout} 
+                    label={intl.formatMessage(textMesgList.nickName)}
+                >
+                {getFieldDecorator('nickName', {
+                    rules: [
+                        {pattern:/^[A-Za-z0-9-_]{8,15}$/g,message:'昵称由8-15位的数字，字母,-,_组成'},
+                        {   required: true,
+                            message: `${intl.formatMessage(textMesgList.plsInput)}${intl.formatMessage(textMesgList.nickName)}`
+                        },
+                        {validator:(rule,value,callback)=>{
+                                if(value == undefined  || value == '' || !/^[A-Za-z0-9-_]{8,15}$/g.test(value)){
+                                    callback();
+                                    return false;
                                 }
-                            ]
-                        })(
-                            <Input 
-                            //onBlur={e=>this.exsitname(e.target.value)} 
-                            />
-                        )}
-                        </FormItem>
-                        <FormItem {...formItemLayout} label={intl.formatMessage(textMesgList.styleSign)} >
-                        {getFieldDecorator('styleSign', {
-                            rules: [{
-                                required: true, message: `${intl.formatMessage(textMesgList.plsInput)}${intl.formatMessage(textMesgList.styleSign)}`,
-                            }],
-                        })(
-                            <Input />
-                        )}
-                        </FormItem>
+                                API.checkNickname({name:value}).then(res=>{
+                                    if(res.isRepeat){
+                                        callback(intl.formatMessage(textMesgList.isRepeat));
+                                    }else{
+                                        callback(); 
+                                    }
+                                })
+                            }
+                        }
+                    ]
+                })(
+                    <Input 
+                    //onBlur={e=>this.exsitname(e.target.value)} 
+                    />
+                )}
+                </FormItem>
+                <FormItem {...formItemLayout} label={intl.formatMessage(textMesgList.styleSign)} >
+                {getFieldDecorator('styleSign', {
+                    rules: [{
+                        required: true, message: `${intl.formatMessage(textMesgList.plsInput)}${intl.formatMessage(textMesgList.styleSign)}`,
+                    }],
+                })(
+                    <Input />
+                )}
+                </FormItem>
 
-                        <FormItem {...formItemLayout} label={intl.formatMessage(textMesgList.sexual)} >
-                        {getFieldDecorator('sexual', {
-                            rules: [{
-                                required: true,message: `${intl.formatMessage(textMesgList.plsSelect)}${intl.formatMessage(textMesgList.sexual)}`
-                            }],
-                        })(<RadioGroup>
-                                <Radio value={'Boys'}>Boys</Radio>
-                                <Radio value={'Girl'}>Girl</Radio>
-                            </RadioGroup>)}
-                        </FormItem>
-                        <FormItem wrapperCol={{ span: formItemLayout.wrapperCol.span, offset: formItemLayout.labelCol.span }} >
-                            <Button type="primary" htmlType="submit">{intl.formatMessage(textMesgList.register)}</Button>
-                        </FormItem>
-                        </Form>
-                    </Content>
-                }
+                <FormItem {...formItemLayout} label={intl.formatMessage(textMesgList.sexual)} >
+                {getFieldDecorator('sexual', {
+                    rules: [{
+                        required: true,message: `${intl.formatMessage(textMesgList.plsSelect)}${intl.formatMessage(textMesgList.sexual)}`
+                    }],
+                })(<RadioGroup>
+                        <Radio value={'Boys'}>Boys</Radio>
+                        <Radio value={'Girl'}>Girl</Radio>
+                    </RadioGroup>)}
+                </FormItem>
+                <FormItem wrapperCol={{ span: formItemLayout.wrapperCol.span, offset: formItemLayout.labelCol.span }} >
+                    <Button type="primary" htmlType="submit">{intl.formatMessage(textMesgList.register)}</Button>
+                </FormItem>
+                </Form>
+            </Content>
+            {/* 
+            <Sider collapsible={true} collapsed={collapsed} theme={'dark'} onCollapse={(collapsed, type)=>{this.setState({collapsed})}}>
+                        "content of righ"
+            </Sider> 
+            */}
+            </Layout>
+            
+            <Footer>
                 <PublicFooter />
+            </Footer>
             </Layout>
         );
     }

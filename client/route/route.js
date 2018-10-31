@@ -1,5 +1,5 @@
 //import {Router, Route , Redirect, IndexRoute, Link, IndexRedirect,routerRedux} from "dva/router";
-import { HashRouter, Route, hashHistory, Switch } from 'react-router-dom';
+import { HashRouter, Route, hashHistory, Switch,Router } from 'react-router-dom';
 import React ,{ Component} from "react";
 import path from "./path.js";
 import EnetryIndex from "../components/EnetryIndex.jsx";
@@ -12,8 +12,9 @@ import HallCompoent from "../components/Hall.jsx";
 
 
 export default ({history}) => {
+    console.log(history);
     return (
-        <HashRouter history={hashHistory}>
+        <HashRouter history={history}>
             <Switch>
                 <Route path="/" component={EnetryIndex}>
                     <Route path={path.hallPaht} component={HallCompoent} />

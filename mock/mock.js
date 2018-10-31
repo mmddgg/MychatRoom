@@ -7,6 +7,9 @@ Mock.Random.string();
 Mock.Random.date();
 Mock.Random.image();
 Mock.Random.color();
+Mock.Random.cword();
+Mock.Random.cparagraph();
+Mock.Random.csentence();
 
 export default{
     checkNickname:Mock.mock({
